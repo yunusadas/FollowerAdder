@@ -4,11 +4,15 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const activeTab = tabs[0];
 
+            // followLimit'in "follow" modunda gerekli olduğundan emin olun
+            const followLimit = request.action === "follow" ? request.followLimit : 0;
+            const mode = request.action;
+
             // `chrome.scripting.executeScript` ile kodu aktif sekmede çalıştırıyoruz
             chrome.scripting.executeScript({
                 target: { tabId: activeTab.id },
                 func: runFollowScript,
-                args: [request.followLimit, request.action]
+                args: [followLimit, mode]
             });
         });
     }
