@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Follow/Unfollow Bot</title>
+    <style>
+        /* Genel stil ayarları */
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f7f9;
+            color: #333;
+            width: 250px;
+        }
+
+        h2 {
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+            display: block;
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        #followButton {
+            background-color: #3498db;
+            color: white;
+        }
+
+        #followButton:hover {
+            background-color: #2980b9;
+        }
+
+        #unfollowButton {
+            background-color: #e74c3c;
+            color: white;
+        }
+
+        #unfollowButton:hover {
+            background-color: #c0392b;
+        }
+
+        #status {
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            color: #555;
+        }
+
+        /* Gölge ve kenar düzeni */
+        input[type="number"], button {
+            box-shadow: 0px 3px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hover durumları */
+        button:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body>
+<h2>Auto Follow/Unfollow Bot</h2>
+<label>
+    Follow Limit (Only for Follow Mode):
+    <input type="number" id="followLimit" min="1" value="150">
+</label>
+<button id="followButton">Start Following</button>
+<button id="unfollowButton">Start Unfollowing</button>
+<div id="status"></div>
+
+<script src="popup.js"></script>
+</body>
+</html>
