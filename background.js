@@ -5,15 +5,11 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
         chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
             const activeTab = tabs[0];
 
-            // followLimit'in "follow" modunda gerekli olduğundan emin olun
-            const followLimit = request.action === "follow" ? request.followLimit : 0;
-            const mode = request.action;
-
-            // `chrome.scripting.executeScript` ile kodu aktif sekmede çalıştırıyoruz
+            // Execute the script on the active tab
             chrome.scripting.executeScript({
                 target: { tabId: activeTab.id },
                 func: runFollowScript,
-                args: [followLimit, mode]
+                args: [request.followLimit, request.action]
             });
         });
     }
@@ -39,7 +35,7 @@ function runFollowScript(followLimit, mode = "follow") {
         // Unfollow button keywords in multiple languages
         const unfollowKeywords = [
             'following', 'unfollow', 'entfolgen', 'desconectar', 'désabonner', 'dejar de seguir', 'unir',
-            'dejar', 'décrocher', 'deconnecter', '停止关注', 'slett', 'entfernen'
+            'dejar', 'décrocher', 'deconnecter', '停止关注', 'slett', 'entfernen', 'takiptesin'
         ];
 
         // Gets all follow buttons on the page
@@ -47,7 +43,8 @@ function runFollowScript(followLimit, mode = "follow") {
             return Array.from(document.querySelectorAll('button')).filter(button =>
                 followKeywords.includes(button.textContent.trim().toLowerCase()) ||
                 followKeywords.includes(button.getAttribute('aria-label')?.trim().toLowerCase()) ||
-                Array.from(button.children).some(child => followKeywords.includes(child.textContent.trim().toLowerCase()))
+                Array.from(button.children).some(child => followKeywords.includes(child.textContent.trim().toLowerCase())) ||
+                Array.from(button.querySelectorAll('div')).some(div => followKeywords.includes(div.textContent.trim().toLowerCase()))
             );
         }
 
@@ -56,7 +53,8 @@ function runFollowScript(followLimit, mode = "follow") {
             return Array.from(document.querySelectorAll('button')).filter(button =>
                 unfollowKeywords.includes(button.textContent.trim().toLowerCase()) ||
                 unfollowKeywords.includes(button.getAttribute('aria-label')?.trim().toLowerCase()) ||
-                Array.from(button.children).some(child => unfollowKeywords.includes(child.textContent.trim().toLowerCase()))
+                Array.from(button.children).some(child => unfollowKeywords.includes(child.textContent.trim().toLowerCase())) ||
+                Array.from(button.querySelectorAll('div')).some(div => unfollowKeywords.includes(div.textContent.trim().toLowerCase()))
             );
         }
 
