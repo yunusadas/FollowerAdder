@@ -3,7 +3,7 @@
   "name": "Auto Follow/Unfollow Bot",
   "version": "1.0",
   "description": "Automatically follow or unfollow users on a webpage.",
-  "permissions": ["activeTab", "scripting"],
+  "permissions": ["activeTab", "scripting","tabs","notifications"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
